@@ -22,22 +22,6 @@ jobs:
           chmod +x "${{ github.workspace }}/custom.sh"
           chmod +x "${{ github.workspace }}/supportFiles/custom/build.sh"
 
-      - name: Validate Download URL
-        run: |
-          DEFAULT_URL="https://default.example.com/file.img.gz"
-          USER_INPUT_URL="${{ github.event.inputs.download_url }}"
-          
-          if [[ "$USER_INPUT_URL" == "$DEFAULT_URL" ]]; then
-            echo "❌ 错误：请修改默认下载地址！当前地址为无效占位符。"
-            exit 1
-          fi
-          
-          if [[ ! "$USER_INPUT_URL" =~ ^https?://.+\.[gG][zZ]$|^https?://.+\.[xX][zZ]$|^https?://.+\.[zZ][iI][pP]$ ]]; then
-            echo "❌ 错误：地址需以 http(s) 开头且扩展名为 .gz/.xz/.zip"
-            echo "当前输入：$USER_INPUT_URL"
-            exit 1
-          fi
-
       - name: "Build Image"
         run: |
           download_url="${{ github.event.inputs.download_url }}"
