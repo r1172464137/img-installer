@@ -9,8 +9,9 @@ fi
 
 mkdir -p imm
 DOWNLOAD_URL="$1"
-filename=$(basename "$DOWNLOAD_URL")  # 从 URL 提取文件名
-OUTPUT_PATH="imm/$filename"
+
+# 固定下载文件名
+OUTPUT_PATH="imm/op.img.gz"
 
 echo "下载地址: $DOWNLOAD_URL"
 echo "保存路径: $OUTPUT_PATH"
@@ -25,7 +26,7 @@ echo "✅ 下载成功!"
 file "$OUTPUT_PATH"
 
 # 根据扩展名解压
-extension="${filename##*.}"  # 获取文件扩展名
+extension="${OUTPUT_PATH##*.}"  # 获取文件扩展名
 case $extension in
   gz)
     echo "gz正在解压$OUTPUT_PATH"
@@ -50,7 +51,6 @@ case $extension in
     exit 1
     ;;
 esac
-
 
 # 检查最终文件
 if [ -f "imm/custom.img" ]; then
